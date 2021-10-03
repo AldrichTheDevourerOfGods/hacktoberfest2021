@@ -1,0 +1,58 @@
+import random
+score = 0
+a = True
+numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-']
+while True:
+    print("""Which level do you want? Enter a number:
+1 - simple operations with numbers 2-9
+2 - integral squares of 11-29
+    """)
+    level = input()
+    if level == '1' or level == '2':
+        break
+for i in range(5):
+    if level == '1':
+        difficulty = '(simple operations with numbers 2-9)'
+        number1, number2 = random.randint(2, 9), random.randint(2, 9)
+        operator = random.choice(['+', '-', '*'])
+        print(f"{number1} {operator} {number2}")
+    else:
+        difficulty = '(integral squares of 11-29)'
+        number = random.randint(11, 29)
+        print(number)
+        right_choice = number * number
+
+    while True:
+        inpu = input()
+        if inpu.strip('-').isnumeric():
+            break
+        else:
+            print('Wrong format. Try again.')
+    if level == '1':
+        if operator == '+':
+            right_choice = int(number1) + int(number2)
+        elif operator == '-':
+            right_choice = int(number1) - int(number2)
+        elif operator == '*':
+            right_choice = int(number1) * int(number2)
+        if right_choice == int(inpu):
+            print('Right!')
+            score += 1
+        else:
+            print('Wrong!')
+    else:
+        if right_choice == int(inpu):
+            score += 1
+            print('Right!')
+        else:
+            print('Wrong!')
+print(f"""Your mark is {score}/5. Would you like to save the result? "
+Enter yes or no.""")
+answer = input()
+if answer == 'yes' or answer == 'YES' or answer == 'y' or answer == 'Yes':
+    print('What is your name?')
+    name = input()
+    file = open('results.txt', 'a+')
+    file.write(f"{name}: {score}/5 in level {level} {difficulty}.")
+    print('The results are saved in "results.txt".')
+    file.close()
